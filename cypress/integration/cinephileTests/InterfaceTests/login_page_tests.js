@@ -52,4 +52,16 @@ describe('register page UI tests', () => {
     cy.get('.row > .col-6:nth-child(2) > a').should('have.attr', 'href').and('equal', '/auth/facebook')
   })
 
+  it('has empty submission error displayed', () => {
+    cy.get('form').submit()
+    cy.get('form').should('have.class', 'was-validated')
+  })
+
+  it('has invalid submission error message displayed', () => {
+    cy.get('form').find("[type='email']").type('cyp@cyp.com')
+    cy.get('form').find("[type='password']").type('cyp')
+    cy.get('form').submit()
+    cy.get('#flash').contains('Wrong email or password')
+  })
+
 })
